@@ -11,7 +11,7 @@ Google Cloud
 Usage:
 
 ```python
-luigi.build([BigqueryRunQuery(dataset='mydataset', table='mytable')])
+luigi.build([BigqueryRunQuery(dataset='mydataset', table='mytable', query="""SELECT 'foo' AS bar""")])
 ```
 
 ```python
