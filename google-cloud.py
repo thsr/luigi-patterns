@@ -7,14 +7,23 @@ PROJECT_ID = "myprojectid"
 
 
 class BigqueryRunQuery(bigquery.BigQueryRunQueryTask):
-    """Runs a query on Bigquery and saves it to a table
+    """Runs a query on Bigquery and saves it to a table.
 
-    client (opt): `gcs.GCSClient()` instance
-    project (defaults to PROJECT_ID defined above): "my-project-id"
-    dataset: "my_dataset_id" to write to
-    table: "my_table_id" to write to
-    query: "SELECT 'foo' AS bar"
+    Parameters
+    ----------
+    client: `luigi.contrib.bigquery.BigQueryClient()` instance, optional
+        (default is a new instance)
+    project: str, optional
+        E.g. "my-project-id" (default is PROJECT_ID)
+    dataset: str
+        Dataset to write to e.g. "my_dataset_id"
+    table: str
+        Table to write to e.g. "my_table_id"
+    query: str
+        Query to run e.g. "SELECT 'foo' AS bar"
 
+    References
+    ----------
     https://luigi.readthedocs.io/en/stable/api/luigi.contrib.bigquery.html
     """
     client = luigi.Parameter(default=bigquery.BigQueryClient())
@@ -28,12 +37,19 @@ class BigqueryRunQuery(bigquery.BigQueryRunQueryTask):
 
 
 class FileToGCS(luigi.Task):
-    """Uploads a file from local to Google Cloud Storage
+    """Uploads a file from local to Google Cloud Storage.
 
-    client (opt): `gcs.GCSClient()` instance
-    source: "./path/to/my/file.csv"
-    destination: "gs://bucket/my/file.csv"
+    Parameters
+    ----------
+    client: `luigi.contrib.gcs.GCSClient()` instance, optional
+        (default is a new instance)
+    source: str
+        E.g. "./path/to/my/file.csv"
+    destination: str
+        E.g. "gs://bucket/my/file.csv"
 
+    References
+    ----------
     https://luigi.readthedocs.io/en/stable/api/luigi.contrib.gcs.html
     """
     client = luigi.Parameter(default=gcs.GCSClient())
@@ -50,13 +66,21 @@ class FileToGCS(luigi.Task):
 
 
 class GCSToBigquery(bigquery.BigQueryLoadTask):
-    """Uploads a file from Google Cloud Storage to Bigquery
-    
-    project (defaults to PROJECT_ID defined above): "my-project-id"
-    source: "gs://bucket/my/file.csv"
-    dataset: "my_dataset_id" to write to
-    table: "my_table_id" to write to
+    """Uploads a file from Google Cloud Storage to Bigquery.
 
+    Parameters
+    ----------
+    project: str, optional
+        E.g. "my-project-id" (default is PROJECT_ID)
+    source: str
+        E.g. "gs://bucket/my/file.csv"
+    dataset: str
+        Dataset to write to e.g. "my_dataset_id"
+    table: str
+        Table to write to e.g. "my_table_id"
+
+    References
+    ----------
     https://luigi.readthedocs.io/en/stable/api/luigi.contrib.bigquery.html
     """
     project = luigi.Parameter(default=PROJECT_ID)
@@ -91,11 +115,16 @@ class GCSToBigquery(bigquery.BigQueryLoadTask):
 
 
 class FileToBigquery(luigi.WrapperTask):
-    """Uploads a local file to GCS then GCS to Bigquery
+    """Uploads a local file to GCS then GCS to Bigquery.
 
-    source: "./path/to/my/file.csv"
-    dataset: "my_dataset_id" to write to
-    table: "my_table_id" to write to
+    Parameters
+    ----------
+    source: str
+        E.g. "./path/to/my/file.csv"
+    dataset: str
+        Dataset to write to e.g. "my_dataset_id"
+    table: str
+        Table to write to e.g. "my_table_id"
     """
     source = luigi.Parameter()
     dataset = luigi.Parameter()

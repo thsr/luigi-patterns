@@ -5,6 +5,26 @@ Templates, snippets and task examples for Luigi pipelines
 
 https://github.com/spotify/luigi/
 
+Basic Tasks
+-----------
+
+### Usage
+
+Writes "done" to a file named `WriteToFile-param.txt` (name of the task, dash, param):
+```python
+luigi.build([WriteToFile(param="foobar")])
+```
+
+Writes a Pandas DataFrame to a CSV file named `WriteDataFrameToFile-param.csv` (name of the task, dash, param):
+```python
+luigi.build([WriteDataFrameToFile(param="foobar")])
+```
+
+Template for a task that has two parent tasks: WriteToFile & WriteDataFrameToFile:
+```python
+luigi.build([TaskWithRequirements(param="foobar")])
+```
+
 Google Cloud
 ------------
 
